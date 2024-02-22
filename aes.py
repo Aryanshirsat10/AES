@@ -236,48 +236,13 @@ def msg_Conversion(x):
     m = int(x,16)
     return chr(m)
 def pad(block, block_length):
-    """
-    Pads a block with padding bytes to make it
-    to the required length, in this case, 128 bits.
-
-    PKCS5 padding
     
-    Parameters
-    ----------
-
-    block : string
-        Block to be padded written in hexadecimal as string.
-
-    block_length : int
-        Block length in bytes.
-
-    Returns
-    
-    -------
-    block : string
-        Block padded
-    """
     padding_length = block_length - len(block) //  2
     padding_value = format(padding_length, '02x')
-    return block + padding_value * (padding_length-1)
+    return block + padding_value * padding_length
     
 def unpad(block):
-    """
-    Unpads a block padded with pad() method.
-
-    Parameters
-    ----------
-
-    block : string
-        Block to be unpadded written in hexadecimal as string.
-
-
-    Returns
-    -------
     
-    block : string
-        Block padded
-    """
     # padding_length = int(block[-2:],  16)
     # return block[:-padding_length*2]
     padding_index = block.find('0')
@@ -356,80 +321,81 @@ def decrypt(cipherText, roundKey):
     plainText = ''.join(LL1)
     return plainText
 #KEY = 'Thats my Kung Fu'
-# KEY = input('Enter a Key of 128 bits:')
-# #msg = 'Two One Nine Two'
-# msg = input('Enter the msg which needs to be encrypted:')
+KEY = input('Enter a Key of 128 bits:')
+#msg = 'Two One Nine Two'
+msg = input('Enter the msg which needs to be encrypted:')
 
-# msg1 = pad(msg,16)
-# roundKey = EntendKey(KEY)
+msg1 = pad(msg,16)
+roundKey = EntendKey(KEY)
 
-# print(msg1)
-# cipherText = encrypt(msg1, roundKey)
-# print(f"Encrypted cipher text is:{cipherText}")
-# plainText = decrypt(cipherText, roundKey)
-# plainText1 = unpad(plainText)
-# print(plainText1)
+print(msg1)
+cipherText = encrypt(msg1, roundKey)
+print(f"Encrypted cipher text is:{cipherText}")
+plainText = decrypt(cipherText, roundKey)
+print(f"\nDecrypted Plain Text is :{plainText}\n")
+plainText1 = unpad(plainText)
+print(plainText1)
 
-import tkinter as tk
-from tkinter import messagebox
+# import tkinter as tk
+# from tkinter import messagebox
 
-# Your existing functions and variables here
+# # Your existing functions and variables here
 
-def encrypt_message():
-    key = key_entry.get()
-    msg = msg_entry.get()
-    if not key or not msg:
-        messagebox.showerror("Error", "Please enter both the key and the message.")
-        return
-    msg1 = pad(msg,  16)
-    roundKey = EntendKey(key)
-    cipherText = encrypt(msg1, roundKey)
-    cipher_text_entry.delete(0, tk.END)
-    cipher_text_entry.insert(0, cipherText)
+# def encrypt_message():
+#     key = key_entry.get()
+#     msg = msg_entry.get()
+#     if not key or not msg:
+#         messagebox.showerror("Error", "Please enter both the key and the message.")
+#         return
+#     msg1 = pad(msg,  16)
+#     roundKey = EntendKey(key)
+#     cipherText = encrypt(msg1, roundKey)
+#     cipher_text_entry.delete(0, tk.END)
+#     cipher_text_entry.insert(0, cipherText)
 
-def decrypt_message():
-    cipherText = cipher_text_entry.get()
-    if not cipherText:
-        messagebox.showerror("Error", "Please enter the cipher text.")
-        return
-    roundKey = EntendKey(key_entry.get())  # Assuming the key is the same for decryption
-    plainText = decrypt(cipherText, roundKey)
-    plainText1 = unpad(plainText)
-    plain_text_entry.delete(0, tk.END)
-    plain_text_entry.insert(0, plainText1)
+# def decrypt_message():
+#     cipherText = cipher_text_entry.get()
+#     if not cipherText:
+#         messagebox.showerror("Error", "Please enter the cipher text.")
+#         return
+#     roundKey = EntendKey(key_entry.get())  # Assuming the key is the same for decryption
+#     plainText = decrypt(cipherText, roundKey)
+#     plainText1 = unpad(plainText)
+#     plain_text_entry.delete(0, tk.END)
+#     plain_text_entry.insert(0, plainText1)
 
-# Create the main window
-root = tk.Tk()
-root.title("AES Encryption/Decryption")
-root.geometry("500x300")
-# Create labels and entry fields
-key_label = tk.Label(root, text="Key:", font=("Arial",  12))
-key_label.pack(pady=10)
-key_entry = tk.Entry(root, width=30)
-key_entry.pack(pady=5)
+# # Create the main window
+# root = tk.Tk()
+# root.title("AES Encryption/Decryption")
+# root.geometry("500x300")
+# # Create labels and entry fields
+# key_label = tk.Label(root, text="Key:", font=("Arial",  12))
+# key_label.pack(pady=10)
+# key_entry = tk.Entry(root, width=30)
+# key_entry.pack(pady=5)
 
-msg_label = tk.Label(root, text="Message:", font=("Arial",  12))
-msg_label.pack(pady=10)
-msg_entry = tk.Entry(root, width=30)
-msg_entry.pack(pady=5)
+# msg_label = tk.Label(root, text="Message:", font=("Arial",  12))
+# msg_label.pack(pady=10)
+# msg_entry = tk.Entry(root, width=30)
+# msg_entry.pack(pady=5)
 
 
-cipher_text_label = tk.Label(root, text="Cipher Text:", font=("Arial",  12))
-cipher_text_label.pack(pady=10)
-cipher_text_entry = tk.Entry(root, width=60)
-cipher_text_entry.pack(pady=5)
+# cipher_text_label = tk.Label(root, text="Cipher Text:", font=("Arial",  12))
+# cipher_text_label.pack(pady=10)
+# cipher_text_entry = tk.Entry(root, width=60)
+# cipher_text_entry.pack(pady=5)
 
-plain_text_label = tk.Label(root, text="Plain Text:", font=("Arial",  12))
-plain_text_label.pack(pady=10)
-plain_text_entry = tk.Entry(root, width=60)
-plain_text_entry.pack(pady=5)
+# plain_text_label = tk.Label(root, text="Plain Text:", font=("Arial",  12))
+# plain_text_label.pack(pady=10)
+# plain_text_entry = tk.Entry(root, width=60)
+# plain_text_entry.pack(pady=5)
 
-# Create buttons
-encrypt_button = tk.Button(root, text="Encrypt", command=encrypt_message, font=("Arial",  12))
-encrypt_button.pack(pady=10)
+# # Create buttons
+# encrypt_button = tk.Button(root, text="Encrypt", command=encrypt_message, font=("Arial",  12))
+# encrypt_button.pack(pady=10)
 
-decrypt_button = tk.Button(root, text="Decrypt", command=decrypt_message, font=("Arial",  12))
-decrypt_button.pack(pady=10)
+# decrypt_button = tk.Button(root, text="Decrypt", command=decrypt_message, font=("Arial",  12))
+# decrypt_button.pack(pady=10)
 
-# Start the GUI event loop
-root.mainloop()
+# # Start the GUI event loop
+# root.mainloop()
