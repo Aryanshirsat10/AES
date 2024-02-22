@@ -63,7 +63,7 @@ def XOR(x, y):
         
         z.append(temp)
     return z
-def EntendKey(KEY):
+def ExtendKey(KEY):
     l1 = list(KEY)
     l2 = [hexadecimal1(i) for i in l1]
     #print(l2)
@@ -326,7 +326,7 @@ def decrypt(cipherText, roundKey):
 # msg = input('Enter the msg which needs to be encrypted:')
 
 # msg1 = pad(msg,16)
-# roundKey = EntendKey(KEY)
+# roundKey = ExtendKey(KEY)
 
 # print(msg1)
 # cipherText = encrypt(msg1, roundKey)
@@ -348,7 +348,7 @@ def encrypt_message():
         messagebox.showerror("Error", "Please enter both the key and the message.")
         return
     msg1 = pad(msg,  16)
-    roundKey = EntendKey(key)
+    roundKey = ExtendKey(key)
     cipherText = encrypt(msg1, roundKey)
     cipher_text_entry.delete(0, tk.END)
     cipher_text_entry.insert(0, cipherText)
@@ -358,7 +358,7 @@ def decrypt_message():
     if not cipherText:
         messagebox.showerror("Error", "Please enter the cipher text.")
         return
-    roundKey = EntendKey(key_entry.get())  # Assuming the key is the same for decryption
+    roundKey = ExtendKey(key_entry.get())  # Assuming the key is the same for decryption
     plainText = decrypt(cipherText, roundKey)
     plainText1 = unpad(plainText)
     plain_text_entry.delete(0, tk.END)
