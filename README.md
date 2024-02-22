@@ -1,2 +1,2 @@
-# IS_IA1
+# AES (Advanced Encryption Standard)
 AES encryption
